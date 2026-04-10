@@ -1,6 +1,7 @@
 package br.pucpr.authserver.users
 
 import br.pucpr.authserver.users.requests.CreateUserRequest
+import br.pucpr.authserver.users.requests.UpdateUserRequest
 import br.pucpr.authserver.users.responses.UserResponse
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
@@ -26,9 +27,8 @@ class UserController(val service: UserService) {
     fun insert(
         @Valid @RequestBody user: CreateUserRequest
     ) = service.insert(user.toUser())
-            .let { UserResponse(it) }
-            .let { ResponseEntity.status(HttpStatus.CREATED).body(it) }
-
+        .let { UserResponse(it) }
+        .let { ResponseEntity.status(HttpStatus.CREATED).body(it) }
 
     @GetMapping("/{id}")
     fun getById(
@@ -36,6 +36,15 @@ class UserController(val service: UserService) {
     ) = service.findById(id)
         .let { UserResponse(it) }
         .let { ResponseEntity.ok(it) }
+
+    @PatchMapping("/{id}")
+    fun updateUser(
+        @PathVariable id: Long,
+        @Valid @RequestBody user: UpdateUserRequest
+    ) = service.update(id, user.name!!)
+        ?.let { UserResponse(it) }
+        ?.let { ResponseEntity.ok(it) }
+        ?: ResponseEntity.noContent().build()
 
     @DeleteMapping("/{id}")
     fun delete(

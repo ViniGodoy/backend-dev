@@ -1,9 +1,9 @@
 # Desenvolvimento Backend
 
-Código final da aula 03 - Validação e erros
+Código inicial da aula 04 - Segurança
 
-## Modificações
+## Resolução da atividade da aula 03
 
-* Verifique os pacotes `users.requests`, `users.responses` e `exceptions`
-* O controller dos usuários agora usa DTOs na entrada e saída dos dados
-* Note como a classe `UserService` agora é capaz de disparar erros diretamente e isso simplificou o controller
+* DTOs nos pacotes `roles.requests`, `roles.responses`
+* Mudança no RoleService e RoleController
+* UpdateUserRequest e método UserService.updateUser

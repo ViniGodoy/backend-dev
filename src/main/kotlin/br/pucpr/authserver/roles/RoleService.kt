@@ -1,14 +1,16 @@
 package br.pucpr.authserver.roles
 
 import org.springframework.data.domain.Sort
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
+import org.springframework.web.server.ResponseStatusException
 
 @Service
 class RoleService(val repository: RoleRepository) {
-    fun insert(role: Role): Role? {
+    fun insert(role: Role): Role {
         role.name = role.name.uppercase()
         if (repository.findByName(role.name) != null) {
-            return null
+            throw ResponseStatusException(HttpStatus.CONFLICT, "Role ${role.name} already exists.")
         }
         return repository.save(role)
     }

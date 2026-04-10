@@ -5,7 +5,7 @@ import jakarta.persistence.*
 
 @Entity
 @Table(name = "UserTable")
-class User (
+class User(
     @Id @GeneratedValue
     var id: Long? = null,
 

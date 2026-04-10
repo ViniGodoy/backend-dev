@@ -56,6 +56,16 @@ class UserService(
         return true
     }
 
+    fun update(id: Long, name: String): User? {
+        val user = findById(id)
+        if (user.name == name) {
+            return null
+        }
+        user.name = name
+        repository.save(user)
+        return user
+    }
+
     companion object {
         private val log = LoggerFactory.getLogger(UserService::class.java)
     }
