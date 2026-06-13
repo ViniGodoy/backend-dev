@@ -27,6 +27,7 @@ class Bootstrapper(
                 email = "admin@authserver.com",
                 password = "admin",
                 name = "Auth Server Administrator",
+                phone = ""
             )
             admin.roles.add(adminRole)
             userRepository.save(admin)

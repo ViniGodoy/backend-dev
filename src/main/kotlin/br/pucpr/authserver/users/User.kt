@@ -12,8 +12,17 @@ class User (
     @Column(nullable = false)
     var email: String,
 
+    @Column(nullable = false)
+    val phone: String,
+
+    @Column(nullable = false)
     var password: String,
+
+    @Column(nullable = false)
     var name: String = "",
+
+    @Column(nullable = false)
+    var bio: String = "",
 
     @ManyToMany
     @JoinTable(

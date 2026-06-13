@@ -56,6 +56,7 @@ dependencies {
 	val aws = "1.12.729"
 	implementation("com.amazonaws:aws-java-sdk-bom:$aws")
 	implementation("com.amazonaws:aws-java-sdk-s3:$aws")
+	implementation("com.amazonaws:aws-java-sdk-sns:${aws}")
 	implementation("javax.xml.bind:jaxb-api:2.4.0-b180830.0359")
 }
 

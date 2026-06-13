@@ -3,6 +3,8 @@ package br.pucpr.authserver.users
 import br.pucpr.authserver.exception.NotFoundException
 import br.pucpr.authserver.exception.UnauthorizedException
 import br.pucpr.authserver.exceptions.BadRequestException
+import br.pucpr.authserver.integration.quotes.QuoteClient
+import br.pucpr.authserver.integration.sms.SMSClient
 import br.pucpr.authserver.roles.RoleRepository
 import br.pucpr.authserver.security.Jwt
 import br.pucpr.authserver.users.responses.LoginResponse
@@ -12,17 +14,27 @@ import org.springframework.data.domain.Sort
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
+import kotlin.random.Random
 
 @Service
 class UserService(
     val repository: UserRepository,
     val roleRepository: RoleRepository,
     val avatarService: AvatarService,
-    val jwt: Jwt
+    val jwt: Jwt,
+    val quoteClient: QuoteClient,
+    val smsClient: SMSClient,
 ) {
     fun insert(user: User): User {
         if (repository.findByEmail(user.email) != null) {
             throw BadRequestException("User already exists")
+        }
+        if (user.bio.isEmpty()) {
+            user.bio = quoteClient.randomQuote()?.text ?: ""
+        }
+        if (user.phone.length == 14) {
+            val code = Random.nextInt(1000, 9999)
+            smsClient.send(user, "Hello ${user.name}! Here's your AuthServer code: $code", true)
         }
         return repository.save(user)
     }
