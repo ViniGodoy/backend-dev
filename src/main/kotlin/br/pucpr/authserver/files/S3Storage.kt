@@ -32,7 +32,7 @@ class S3Storage : FileStorage {
             .withS3Client(s3)
             .build()
         transferManager
-            .upload(PUBLIC, path, file.inputStream, meta)
+            .upload(THUMB, path, file.inputStream, meta)
             .waitForUploadResult()
     }
 
@@ -43,7 +43,8 @@ class S3Storage : FileStorage {
     override fun urlFor(name: String) = "$PREFIX/$name"
 
     companion object {
+        private const val THUMB = "vinigodoy-authserver-thumb"
         private const val PUBLIC = "vinigodoy-authserver-public"
-        private const val PREFIX = "https://dcwraktbwkaa5.cloudfront.net"
+        private const val PREFIX = "https://vinigodoy-authserver-public2.s3.us-east-1.amazonaws.com"
     }
 }

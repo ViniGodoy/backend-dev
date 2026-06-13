@@ -18,7 +18,7 @@ class AvatarService(@Qualifier("fileStorage") val storage: FileStorage) {
             }
             val path = "${user.id}/a_${user.id}.$extension"
             storage.save(user, "$ROOT/$path", avatar)
-            path
+            "${user.id}/xl_a_${user.id}.png"
         } catch (exception: Error) {
             log.error("Unable to store avatar of user ${user.id}! Using default.", exception)
             DEFAULT_AVATAR
